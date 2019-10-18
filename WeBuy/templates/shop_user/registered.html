@@ -1,0 +1,35 @@
+{% extends 'shop_user/base_head_foot.html'%}
+ {% block script %}
+<script src="/static/js/Register.js" type="text/javascript"></script>
+{% endblock script %}
+
+{%block title%}注册{%endblock title%}
+
+
+{% block body %}
+<!--<div><a href="#"><img src="/static/images/AD_page_img_02.png" width="100%"/></a></div>-->
+<!--注册样式-->
+<div class="Inside_pages clearfix">
+ <div class="register">
+     <div class="register_style">
+      <div class="u_register">
+        <ul>
+         {% csrf_token %}
+         <li><label class="name">手机号码：</label><input id="txtMobile" name="" type="text"  class="text_Add" value="1888888888"/></li>
+         <li><label class="name">用户名称：</label><input id="txtUserName" name="" type="text"  class="text_Add" value="chanshin"/></li>
+         <li><label class="name">设置密码：</label><input id="txtPwd" name="" type="password" value="123456" class="text_Add" placeholder="6-20个字符，由字母、数字和符号的两种以上组合"/></li>
+         <li><label class="name">确认密码：</label><input id="txtConfirmPwd" name="" type="password" value="123456"  class="text_Add"/></li>
+         <li><label class="name">验&nbsp;证&nbsp;码：</label><input id="txtCode" name="" type="text"  value="456489" class="text_verification"/>
+            <img src="/verifyCode/" onclick="this.src=/verifyCode/+'?'+Math.random()" id="img"><a href="#" onclick="document.getElementById('img').onclick()">换一张?</a></li>
+
+        </ul>
+         <div class="auto-register"><label class="auto-label"><input type="checkbox" id="rememberMe"><span><a href="#">《国际商贸城网站注册协议》</a></span></label></div>
+         <div class="register-btn"><a href="javascript:;" class="btn_register">注&nbsp;&nbsp;&nbsp;&nbsp;册</a></div>
+      </div>
+     </div>
+     <div class="register_img"><img src="/static/images/Register_img.png" /></div>
+ </div>
+</div>
+
+{% endblock body %}
+

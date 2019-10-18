@@ -1,0 +1,70 @@
+{% extends 'shop_user/user.html'%}
+
+    {% block user_script %}
+    {% endblock user_script %}
+
+
+     <!--右侧内容样式-->
+   {% block right %}
+   <div class="user_right">
+    <div class="user_Borders clearfix">
+    <div class="title_name">
+        <span class="name">用户收藏</span>
+       </div>
+   <!--收藏样式-->
+    <div class="Collect">
+      <ul class="Collect_list">
+
+        <li>
+           <div class="Collect_pro_name">
+            <a href="#" class="delete_Collect"></a>
+            <p class="img center"><a href="#"><img src="/static/images/product_img_17.png" /></a></p>
+            <p><a href="#">天然绿色多汁香甜无污染水蜜桃</a></p>
+            <p class="Collect_Standard">礼盒装</p>
+            <p class="Collect_price">￥234</p>
+            </div>
+        </li>
+
+        {% for each in page%}
+            <li>
+               <div class="Collect_pro_name">
+                <a href="#" class="delete_Collect"></a>
+                <p class="img center"><a href="/Product{{each.goods_name.id}}/"><img src="/static/media/{{each.goods_name.goods_image}}" /></a></p>
+                <p><a href="#">{{each.goods_name.goods_name}}</a></p>
+                <p class="Collect_Standard">礼盒装</p>
+                <p class="Collect_price">￥{{each.goods_name.goods_price}}</p>
+                </div>
+        </li>
+        {% endfor %}
+
+
+      </ul>
+      <!--分页-->
+      <div class="pages_Collect clearfix">
+         <a href="/user_Collect{{pre_page}}/" >《</a>
+        {% for index in page.paginator.page_range%}
+          {% if index = page.number %}
+            <a class="on">{{index}}</a>
+          {% else %}
+            <a href="/user_Collect{{index}}/">{{index}}</a>
+          {% endif %}
+        {% endfor %}
+       <a href="/user_Collect{{next_page}}/">》</a>
+
+      </div>
+    </div>
+    </div>
+   </div>
+<script type="text/javascript">
+    $('.delete_Collect').click(function () {
+        var product = $(this).next().next().find('a').text()
+        var nickName = $('#islogin_1').text()
+        $.get('/delete_collect/?product='+product+'&nickName='+nickName,function (msg) {
+            if (msg=='success'){
+                window.location = '/user_Collect/';
+                alert('成功删除')
+            }
+        })
+    })
+</script>
+   {% endblock right %}

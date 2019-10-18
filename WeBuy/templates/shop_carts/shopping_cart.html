@@ -1,0 +1,130 @@
+{% extends 'shop_user/base_head_foot.html'%}
+ {% block script %}
+<script src="/static/js/Login.js" type="text/javascript"></script>
+<script src="/static/js/createOrder.js" type="text/javascript"></script>
+<script>
+ function updatenum(operate,id) {
+   if (operate =='+'){
+       $('#'+id+' .number_text').val(parseInt($('#'+id+' .number_text').val())+1)
+   }
+   if (operate=='-'){
+    if (parseInt($('#'+id+' .number_text').val())>1){
+     $('#'+id+' .number_text').val(parseInt($('#'+id+' .number_text').val())-1)
+    }
+   }
+   $('#'+id+' .title_width4').text('￥'+(parseFloat($('#'+id+' .price').text())*parseInt($('#'+id+' .number_text').val())).toFixed(2))
+ }
+
+</script>
+{% endblock script %}
+{%block title%}购物车{%endblock title%}
+
+{% block body %}
+
+<!---->
+<div><a href="#"><img src="/static/images/AD_page_img_02.png" width="100%"/></a></div>
+<!--位置-->
+<div class="Bread_crumbs">
+ <div class="Inside_pages clearfix">
+   <div class="right Search">
+   <form>
+    <input name="" type="text"  class="Search_Box"/>
+    <input name="" type="button"  name="" class="Search_btn"/>
+    </form>
+   </div>
+ </div>
+</div>
+<!--购物车样式-->
+<div class="Narrow">
+  <div class="shop_cart">
+     <div class="schedule"></div>
+     <div class="cart_style">
+       <div class="title_name">
+        <ul>
+         <li class="title_width"><label class="auto-label"><input type="checkbox" class="rememberMe" id="checkall"><span>全选</span></label></li>
+         <li class="title_width1">商品信息</li>
+         <li class="title_width2">单价</li>
+         <li class="title_width3">数量</li>
+         <li class="title_width4">小计</li>
+         <li class="title_width5">操作<br><a id="allDelete" style="color: #005aa0" href="#">删除</a></li>
+        </ul>
+       </div>
+       <div class="list_style">
+        <div class="class_title">水果馆</div>
+
+<!--         <ul id="1" class="product_cart">-->
+<!--         <li class="title_width"><input type="checkbox" class="rememberMe"></li>-->
+<!--         <li class="title_width1">-->
+<!--         <a href="#" class="product_img left"><img src="/static/images/product_img_17.png" /></a>-->
+<!--         <p class="cart_content">-->
+<!--         <a href="#" class="title_name">浦江特产绿豌豆天然无污染</a>-->
+<!--         <span> 礼盒装：20个装</span>-->
+<!--         </p>-->
+<!--         </li>-->
+<!--         <li class="title_width2">￥<span class="price">545</span></li>-->
+<!--         <li class="title_width3">-->
+<!--           <div class="Numbers">-->
+<!--             <a href="javascript:void(0);" onclick="updatenum('-',{{id|safe}});" class="jian">-</a>-->
+<!--             <input name="number" type="text" value="1" class="number_text">-->
+<!--             <a href="javascript:void(0);" onclick="updatenum('+',{{id|safe}});" class="jia">+</a>-->
+<!--		   </div>-->
+<!--         </li>-->
+<!--         <li class="title_width4">￥545</li>-->
+<!--         <li class="title_width5"><a href="#">删除</a></li>-->
+<!--         </ul>-->
+
+         {% for each in page %}
+           <ul id="{{each.id}}" class="product_cart">
+         <li class="title_width"><input type="checkbox" class="rememberMe"></li>
+         <li class="title_width1">
+             <a href="/Product{{each.goods_name.id}}/" class="product_img left"><img width="100" height="100" src="/static/media/{{each.goods_name.goods_image}}" /></a>
+             <p class="cart_content">
+             <a href="/Product{{each.goods_name.id}}/" class="title_name">{{each.goods_name.goods_name}}</a>
+             <span> 礼盒装：20个装</span>
+             </p>
+         </li>
+         <li class="title_width2">￥<span class="price">{{each.goods_name.goods_price}}</span></li>
+         <li class="title_width3">
+           <div class="Numbers">
+             <a href="javascript:void(0);" onclick="updatenum('-',{{each.id|safe}})" class="jian">-</a>
+             <input name="number" type="text" value="{{each.productsNumber}}" class="number_text">
+             <a href="javascript:void(0);" onclick="updatenum('+',{{each.id|safe}})" class="jia">+</a>
+		   </div>
+         </li>
+         <li class="title_width4"><span>￥</span>0</li>
+         <li class="title_width5"><a href="#">删除</a></li>
+         </ul>
+           <script>
+               $(function () {
+                   $('#'+{{each.id}}+' .title_width4').text('￥'+(parseInt($('#'+'{{each.id}}'+' .number_text').val())*parseFloat($('#'+'{{each.id}}'+' .price').text())).toFixed(2))
+               })
+           </script>
+         {% endfor %}
+
+
+       </div>
+     </div>
+      <div class="pages_Collect clearfix">
+        <a  href="/shopping_cart{{pre_page}}/"><<</a>
+        {% for index in page.paginator.page_range%}
+            {% if index == page.number %}
+                <a  href="/shopping_cart{{index}}/">{{index}}</a>
+            {% else%}
+                <a  href="/shopping_cart{{index}}/">{{index}}</a>
+            {% endif %}
+        {% endfor %}
+          <a  href="/shopping_cart{{next_page}}/">>></a>
+      </div>
+     <!--操作-->
+     <div class="cart_operating clearfix">
+        <div class="cart_operating_style">
+           <div class="cart_price">商品总价：（不含运费）<b>￥0</b></div>
+           <div class="cart_btn"><a href="#" class="payment_btn"></a><a href="/index/" class="continue_btn"></a></div>
+        </div>
+     </div>
+  </div>
+</div>
+<script src="/static/js/shopping_carts.js" type="text/javascript"></script>
+
+{% endblock body %}
+<!--底部样式-->

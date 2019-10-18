@@ -1,0 +1,143 @@
+{% extends 'shop_user/base_head_foot.html'%}
+ {% block script %}
+<script src="/static/js/Login.js" type="text/javascript"></script>
+<script src="/static/js/addToCart.js" type="text/javascript"></script>
+<script src="/static/js/addToCollect.js" type="text/javascript"></script>
+<script>
+    $(function () {
+       $('.a_click').click(function () {
+           var name = $(this).find('p').text();
+           $.ajax({
+               url:'/clickNumber/',
+               data:{
+                   name:name
+               },
+               type:'get',
+               dataType:'json',
+           })
+       });
+       $('.b_click').click(function () {
+           var name = $(this).next().find('p').text();
+           $.ajax({
+               url:'/clickNumber/',
+               data:{
+                   name:name
+               },
+               type:'get',
+               dataType:'json',
+           })
+       })
+    });
+
+</script>
+
+{% endblock script %}
+{%block title%}产品列表页{%endblock title%}
+
+{% block body %}
+
+<!---->
+<div><a href="#"><img src="/static/images/AD_page_img_02.png" width="100%"/></a></div>
+<!--位置-->
+<div class="Bread_crumbs">
+ <div class="Inside_pages clearfix">
+   <div class="left">当前位置：<a href="#">首页</a>&gt;<a id="typeName" href="#" >{{typeName}}</a></div>
+   <div class="right Search">
+   <form>
+    <input name="" type="text"  class="Search_Box"/>
+    <input name="" type="button"  name="" class="Search_btn"/>
+    </form>
+   </div>
+ </div>
+</div>
+<!--产品列表-->
+<div class="Inside_pages clearfix">
+<div class="margintop">
+ <DIV class="left_style">
+   <div class="title_img_p"><img src="/static/images/p_vegetables_img.png" /></div>
+   <div class="ranking">
+    <div class="ranking_title"><span>销量</span>排行</div>
+    <ul class="ranking_list">
+     <li class="">
+     <em class="ranking_label">1</em>
+     <a href="/Product{{tuijian.0.3}}/" class="img"> <img src="/static/media/{{tuijian.0.0}}" width="100px" height="100px" /></a>
+     <p class="ranking_name">{{tuijian.0.1}}</p>
+     <p class="price"><b>￥</b>{{tuijian.0.2}}</p>
+     <p><a href="/Product{{tuijian.0.3}}/">立即查看< </a></p>
+     </li>
+     <li class="">
+     <em class="ranking_label">2</em>
+     <a href="/Product{{tuijian.1.3}}/" class="img"> <img src="/static/media/{{tuijian.1.0}}" width="100px" height="100px" /></a>
+     <p class="ranking_name">{{tuijian.1.1}}</p>
+     <p class="price"><b>￥</b>{{tuijian.1.2}}</p>
+     <p><a href="/Product{{tuijian.1.3}}/">立即查看< </a></p>
+     </li>
+     <li class="">
+     <em class="ranking_label">3</em>
+     <a href="/Product{{tuijian.2.3}}/" class="img"> <img src="/static/media/{{tuijian.2.0}}" width="100px" height="100px" /></a>
+     <p class="ranking_name">{{tuijian.2.1}}</p>
+     <p class="price"><b>￥</b>{{tuijian.2.2}}</p>
+     <p><a href="/Product{{tuijian.2.3}}/">立即查看< </a></p>
+     </li>
+     <li class="">
+     <em class="ranking_label">4</em>
+     <a href="/Product{{tuijian.3.3}}/" class="img"> <img src="/static/media/{{tuijian.3.0}}" width="100px" height="100px" /></a>
+     <p class="ranking_name">{{tuijian.3.1}}</p>
+     <p class="price"><b>￥</b>{{tuijian.3.2}}</p>
+     <p><a href="/Product{{tuijian.3.3}}/">立即查看< </a></p>
+     </li>
+     <li class="">
+     <em class="ranking_label">5</em>
+     <a href="/Product{{tuijian.4.3}}/" class="img"> <img src="/static/media/{{tuijian.4.0}}" width="100px" height="100px" /></a>
+     <p class="ranking_name">{{tuijian.4.1}}</p>
+     <p class="price"><b>￥</b>{{tuijian.4.2}}</p>
+     <p><a href="/Product{{tuijian.4.3}}/">立即查看< </a></p>
+     </li>
+    </ul>
+   </div>
+ </DIV>
+ <DIV class="right_style">
+    <ul id="allGoods" class="list_style">
+<!--        <li class="clearfix">-->
+<!--          <div class="product_lists clearfix">-->
+<!--           <a href="#" class="Collect"></a>-->
+<!--           <a href="#"><img src="/static/images/product_img_17.png" /></a>-->
+<!--           <p class="title_p_name">浦江多汁红提</p>-->
+<!--           <p class="title_Profile">绿色有机天然无污染</p>-->
+<!--           <p class="price"><b>￥</b>13.5</p>-->
+<!--           <p class="btn_style"><a href="/shopping_cart/" class="buy_btn"></a><a href="#" class="Join_btn"></a></p>-->
+<!--           </div>-->
+<!--          </li>-->
+        {% for each in page%}
+         <li class="clearfix">
+                <div class="product_lists clearfix">
+                <a href="#" class="Collect"></a>
+                <a class="b_click" href="/Product{{each.id}}/"><img width="209" height="219" src="/static/media/{{each.goods_image}}" /></a>
+                <a class="a_click" href="/Product{{each.id}}/" style="text-align:left" href="#"><p class="title_p_name">{{each.goods_name}}</p></a>
+                <p class="title_Profile">{{each.goods_introduction}}</p>
+                <p class="price"><b>￥</b>{{each.goods_price}}</p>
+                <p class="btn_style"><a href="/shopping_cart/" class="buy_btn"></a><a href="#" class="Join_btn"></a></p>
+                </div>
+         </li>
+         {% endfor %}
+    </ul>
+<div class="pages_Collect clearfix">
+  <a  href="/getGoodsType{{typeId}}/{{pre_page}}/"><<</a>
+
+  {% for index in page.paginator.page_range %}
+     {% if index == page.number%}
+       <a >{{index}}</a>
+     {% else %}
+       <a  href="/getGoodsType{{typeId}}/{{index}}/">{{index}}</a>
+     {% endif %}
+  {% endfor %}
+         
+  <a  href="/getGoodsType{{typeId}}/{{next_page}}/">>></a>
+</div>
+ </DIV>
+ </div>
+</div>
+<script>{{typeId}}</script>
+
+{% endblock body %}
+<!--底部样式-->

@@ -1,0 +1,37 @@
+{% extends 'shop_user/user.html'%}
+
+    {% block user_script %}
+    {% endblock user_script %}
+
+{% block right %}
+<div class="user_right">
+      <div class="user_Borders">
+       <div class="title_name">
+        <span class="name">个人信息设置</span>
+       </div>
+       <div class="about_user_info">
+       <form id="form1" name="form1" method="" action="">
+       <div class="user_layout">
+           {% csrf_token %}
+         <ul >
+<!--          <li><label class="user_title_name">用户头像：</label></li>-->
+          <li><label class="user_title_name">用户昵称：</label>
+              <p id="nickName">{{nickName}}</p>
+          </li>
+<!--              <input name="" id="nickName" type="text"  class="add_text" value='{{nickName}}'/><em></em></li>-->
+          <li><label class="user_title_name">真实姓名：</label><input name="" id="realName" type="text"  class="add_text" value="{{realName}}"/><em>*</em></li>
+          <li><label class="user_title_name">用户性别：</label>
+                <label class="sex"> <input type="radio" name="RadioGroup1" value="1" id="RadioGroup1_0" /><span>男</span></label>
+                <label class="sex"><input type="radio" name="RadioGroup1" value="2" id="RadioGroup1_1" /><span>女</span></label>
+                <em>*</em>
+          </li>
+          <li><label class="user_title_name">手&nbsp;机&nbsp;号：</label><input name="" id="number" type="text"  class="add_text" value="{{number}}"/><em>*</em></li>
+          <li><label class="user_title_name">邮箱地址：</label><input name="" id="mail" type="text"  class="add_text"value="{{mail}}"/><em>*</em></li>
+         </ul>
+         <div class="operating_btn"><input name="name" type="" value="提交"  id="btn" class="submit—btn"/></div>
+         </div>
+          </form>
+       </div>
+      </div>
+    </div>
+{% endblock right %}
